@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/Users/mb/Documents/derja-scraper/arabivo-clone/app/layout\":[\"static/media/e4af272ccee01ff0-s.p.woff2\",\"static/media/fb12bdfc6f99d938-s.p.woff2\",\"static/media/b261c59b2d76913d-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
