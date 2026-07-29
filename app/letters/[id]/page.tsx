@@ -1,7 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import { ARABIC_LETTERS } from '@/data/letters'
+import { useArabicAudio } from '@/hooks/useArabicAudio'
 
 export default function LetterPage({ params }: { params: { id: string } }) {
+  const { speak } = useArabicAudio()
   const letter = ARABIC_LETTERS.find((l) => l.id === params.id)
 
   if (!letter) {
@@ -40,7 +44,16 @@ export default function LetterPage({ params }: { params: { id: string } }) {
               <div className="grid sm:grid-cols-2 gap-8">
                 <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl">
                   <div className="text-8xl font-bold text-green-600 mb-4">{letter.letter}</div>
-                  <p className="text-2xl font-bold text-gray-900">{letter.name}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-2xl font-bold text-gray-900">{letter.name}</p>
+                    <button
+                      onClick={() => speak(letter.letter)}
+                      className="text-lg text-green-600 hover:text-green-700 transition-colors p-1 hover:bg-green-100 rounded"
+                      title="Play pronunciation"
+                    >
+                      🔊
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -52,7 +65,16 @@ export default function LetterPage({ params }: { params: { id: string } }) {
                   <div>
                     <p className="text-xs text-gray-500 font-semibold mb-2">EXAMPLE WORD</p>
                     <div className="flex items-center gap-4">
-                      <span className="arabic text-3xl text-gray-900">{letter.exampleWord}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="arabic text-3xl text-gray-900">{letter.exampleWord}</span>
+                        <button
+                          onClick={() => speak(letter.exampleWord)}
+                          className="text-lg text-green-600 hover:text-green-700 transition-colors p-1 hover:bg-green-100 rounded"
+                          title="Play pronunciation"
+                        >
+                          🔊
+                        </button>
+                      </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">{letter.exampleMeaning}</p>
                       </div>

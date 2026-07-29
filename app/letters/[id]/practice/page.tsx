@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ARABIC_LETTERS } from '@/data/letters'
 import TracingCanvas from '@/components/TracingCanvas'
+import { useArabicAudio } from '@/hooks/useArabicAudio'
 
 export default function LetterPracticePage({ params }: { params: { id: string } }) {
   const letter = ARABIC_LETTERS.find((l) => l.id === params.id)
   const [currentPosition, setCurrentPosition] = useState<'initial' | 'medial' | 'terminal'>('initial')
+  const { speak } = useArabicAudio()
 
   if (!letter || !letter.forms) {
     return (
@@ -33,8 +35,28 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
           <Link href={`/letters/${letter.id}`} className="inline-block mb-4 text-green-600 hover:text-green-700 font-medium text-sm">
             ← Back to {letter.name}
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Practice Writing {letter.name}</h1>
-          <p className="text-gray-600 mt-2">Write the letter in different positions</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Practice Writing {letter.name}</h1>
+              <p className="text-gray-600 mt-2">Write the letter in different positions</p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => speak(letter.letter, 1)}
+                className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors font-medium text-sm"
+                title="Play at normal speed"
+              >
+                🔊 Normal
+              </button>
+              <button
+                onClick={() => speak(letter.letter, 0.5)}
+                className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium text-sm"
+                title="Play at slow speed"
+              >
+                🐢 Slow
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 

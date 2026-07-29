@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     'Learn to write Arabic through guided tracing. 8 topics, 70+ words, every word with full tashkeel vowel marks. Free to try.',
   keywords: ['write arabic', 'arabic writing', 'learn arabic', 'arabic tracing', 'tashkeel', 'arabic vowels', 'arabic letters'],
   metadataBase: new URL('https://write-arabic.co'),
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: 'WriteArabic — Learn to Write Arabic',
     description: '8 topics. 70+ words. Every word fully vowelled. Trace Arabic on any device.',
