@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import Navbar from '@/components/Navbar'
 import { TOPICS } from '@/data/words'
 import TracingCanvas from '@/components/TracingCanvas'
+import TodayWord from '@/components/TodayWord'
 
 const KeyboardEmbed = dynamic(() => import('@/components/KeyboardEmbed'), { ssr: false })
 
@@ -64,15 +65,16 @@ export default function Home() {
 
               {/* Headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-5">
-                Write Arabic<br />
-                <span className="text-green-600">by topic.</span>
+                Learn to write Arabic<br />
+                <span className="text-green-600">by tracing real words.</span>
               </h1>
 
               {/* Sub-headline — the key differentiator */}
               <p className="text-lg text-gray-500 mb-4 leading-relaxed">
-                Choose a topic — Food, Travel, Greetings — then trace each word with{' '}
-                <strong className="text-gray-700 font-semibold">full vowel marks</strong> so you
-                learn to read <em>and</em> write at the same time.
+                Pick a topic — Food, Travel, Greetings — then trace each word over a{' '}
+                <strong className="text-gray-700 font-semibold">guided canvas</strong>. Every word comes with{' '}
+                <strong className="text-gray-700 font-semibold">full vowel marks</strong> so you read
+                and write at the same time.
               </p>
               <p className="text-sm text-gray-400 mb-10">
                 100+ topics · 1000+ words · tashkeel on every single one.
@@ -95,9 +97,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tracing Canvas */}
+            {/* Today's Word Section */}
             <div className="hidden lg:block">
-              <TracingCanvas arabic="ا" />
+              <Suspense fallback={<div className="h-96 bg-gray-50 rounded-2xl animate-pulse" />}>
+                <TodayWord />
+              </Suspense>
             </div>
             </div>
         </section>
