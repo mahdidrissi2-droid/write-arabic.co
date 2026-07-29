@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ARABIC_LETTERS } from '@/data/letters'
 
-// Trigger redeploy
+// Force rebuild with env vars
 export default function LettersPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
