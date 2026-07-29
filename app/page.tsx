@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import Navbar from '@/components/Navbar'
 import { TOPICS } from '@/data/words'
+import TracingCanvas from '@/components/TracingCanvas'
 
 const KeyboardEmbed = dynamic(() => import('@/components/KeyboardEmbed'), { ssr: false })
 
@@ -37,8 +38,8 @@ const testimonials = [
 ]
 
 const stats = [
-  { value: '70+', label: 'words with full vowel marks' },
-  { value: '8', label: 'topic categories' },
+  { value: '1000+', label: 'words with full vowel marks' },
+  { value: '100+', label: 'topic categories' },
   { value: '100%', label: 'tashkeel on every word' },
   { value: 'Free', label: 'to try — no card needed' },
 ]
@@ -53,7 +54,7 @@ export default function Home() {
 
         {/* ── HERO ─────────────────────────────────────────── */}
         <section className="relative overflow-hidden pattern-arabesque">
-          <div className="max-w-5xl mx-auto px-4 pt-20 pb-16">
+          <div className="max-w-6xl mx-auto px-4 pt-20 pb-16 grid lg:grid-cols-2 gap-8 items-center">
             <div className="max-w-2xl">
               {/* Eyebrow */}
               <div className="inline-flex items-center gap-2 bg-green-50 border border-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
@@ -74,7 +75,7 @@ export default function Home() {
                 learn to read <em>and</em> write at the same time.
               </p>
               <p className="text-sm text-gray-400 mb-10">
-                8 topics · 70+ words · tashkeel on every single one.
+                100+ topics · 1000+ words · tashkeel on every single one.
               </p>
 
               {/* Single primary CTA */}
@@ -94,19 +95,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Floating Arabic word sample — decorative */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-end gap-3 pr-8 pointer-events-none select-none">
-              {['مَرْحَبًا', 'قَهْوَةٌ', 'سَلَامٌ', 'شُكْرًا'].map((w, i) => (
-                <span
-                  key={w}
-                  className="arabic text-4xl font-bold text-gray-100"
-                  style={{ opacity: 1 - i * 0.2 }}
-                >
-                  {w}
-                </span>
-              ))}
+            {/* Tracing Canvas */}
+            <div className="hidden lg:block">
+              <TracingCanvas />
             </div>
-          </div>
+            </div>
         </section>
 
         {/* ── STAT BAR ─────────────────────────────────────── */}
