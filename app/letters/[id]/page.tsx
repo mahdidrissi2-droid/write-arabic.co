@@ -110,8 +110,11 @@ export default function LetterPage({ params }: { params: { id: string } }) {
           <Link href="/letters" className="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition-colors font-semibold">
             ← Back to Letters
           </Link>
+          <Link href={`/letters/${letter.id}/practice`} className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+            Practice Writing →
+          </Link>
           <Link href="/write" className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold">
-            Go to Words Practice →
+            Words Practice →
           </Link>
         </div>
       </main>
