@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import TracingCanvas from './TracingCanvas'
+import { useArabicAudio } from '@/hooks/useArabicAudio'
 
 // Sample daily words - in production, rotate these daily
 const DAILY_WORDS = [
@@ -15,6 +16,7 @@ const DAILY_WORDS = [
 export default function TodayWord() {
   const [checkMessage, setCheckMessage] = useState(false)
   const [checkPercentage, setCheckPercentage] = useState(0)
+  const { speak } = useArabicAudio()
 
   // Get today's word based on day of year
   const dayOfYear = Math.floor((Date.now() / (1000 * 60 * 60 * 24)) % DAILY_WORDS.length)
@@ -33,7 +35,16 @@ export default function TodayWord() {
       <div className="bg-gradient-to-r from-green-50 to-blue-50 px-6 py-4 border-b border-gray-100">
         <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-1">Today's Word</p>
         <div className="flex items-baseline gap-3">
-          <p className="text-3xl font-bold text-gray-900 arabic">{todayWord.word}</p>
+          <div className="flex items-baseline gap-2">
+            <p className="text-3xl font-bold text-gray-900 arabic">{todayWord.word}</p>
+            <button
+              onClick={() => speak(todayWord.word)}
+              className="text-xl text-green-600 hover:text-green-700 transition-colors p-1 hover:bg-green-100 rounded"
+              title="Play pronunciation"
+            >
+              🔊
+            </button>
+          </div>
           <div>
             <p className="text-lg font-semibold text-gray-900">{todayWord.name}</p>
             <p className="text-sm text-gray-600">{todayWord.meaning}</p>
