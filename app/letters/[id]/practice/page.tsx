@@ -123,7 +123,7 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Your Practice Area</h3>
                 <p className="text-gray-600 mb-6">Trace or write the letter below. Try to match the example above.</p>
                 <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl overflow-hidden border-2 border-blue-200">
-                  <TracingCanvas />
+                  <TracingCanvas arabic={pos.form || letter.letter} />
                 </div>
                 <p className="text-xs text-gray-500 mt-4 text-center">Use your mouse or touch to write on the canvas</p>
               </div>

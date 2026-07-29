@@ -97,7 +97,7 @@ export default function Home() {
 
             {/* Tracing Canvas */}
             <div className="hidden lg:block">
-              <TracingCanvas />
+              <TracingCanvas arabic="ا" />
             </div>
             </div>
         </section>
