@@ -14,6 +14,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-6 text-sm text-gray-600">
           <Link href="/#challenge" className="hover:text-gray-900 transition-colors">Try</Link>
+          <Link href="/letters" className="hover:text-gray-900 transition-colors">Letters</Link>
           <Link href="/keyboard" className="hover:text-gray-900 transition-colors">Keyboard</Link>
           <Link href="/league" className="hover:text-gray-900 transition-colors">League</Link>
           <Link href="/#features" className="hover:text-gray-900 transition-colors">Features</Link>
@@ -46,6 +47,7 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 py-4 flex flex-col gap-4 text-sm">
           <Link href="/#challenge" onClick={() => setOpen(false)}>Try</Link>
+          <Link href="/letters" onClick={() => setOpen(false)}>Letters</Link>
           <Link href="/league" onClick={() => setOpen(false)}>League</Link>
           <Link href="/#features" onClick={() => setOpen(false)}>Features</Link>
           <Link href="/#pricing" onClick={() => setOpen(false)}>Pricing</Link>
