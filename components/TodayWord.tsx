@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import TracingCanvas from './TracingCanvas'
 import { useArabicAudio } from '@/hooks/useArabicAudio'
+import { getRandomFeedback } from '@/lib/feedback'
 
 // Sample daily words - in production, rotate these daily
 const DAILY_WORDS = [
@@ -16,6 +17,8 @@ const DAILY_WORDS = [
 export default function TodayWord() {
   const [checkMessage, setCheckMessage] = useState(false)
   const [checkPercentage, setCheckPercentage] = useState(0)
+  const [checkTitle, setCheckTitle] = useState('')
+  const [checkText, setCheckText] = useState('')
   const { speak } = useArabicAudio()
 
   // Get today's word based on day of year
@@ -24,9 +27,12 @@ export default function TodayWord() {
 
   const handleCheck = (pct: number) => {
     setCheckPercentage(pct)
+    const feedback = getRandomFeedback(pct)
+    setCheckTitle(feedback.title)
+    setCheckText(feedback.message)
     setCheckMessage(true)
-    // Hide message after 3 seconds
-    setTimeout(() => setCheckMessage(false), 3000)
+    // Hide message after 3.5 seconds
+    setTimeout(() => setCheckMessage(false), 3500)
   }
 
   return (
@@ -60,14 +66,12 @@ export default function TodayWord() {
 
         {/* Success Message */}
         {checkMessage && (
-          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in">
-            <div className="flex items-center gap-2">
-              <div className="text-green-600">✓</div>
+          <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg animate-in fade-in">
+            <div className="flex items-center gap-3">
+              <div className="text-2xl">✨</div>
               <div>
-                <p className="font-semibold text-green-900">Great job!</p>
-                <p className="text-sm text-green-700">
-                  {checkPercentage >= 80 ? "Perfect match! You nailed it." : checkPercentage >= 60 ? "Good effort! Keep practicing." : "Keep practicing and you'll get there!"}
-                </p>
+                <p className="font-bold text-green-900 text-lg">{checkTitle}</p>
+                <p className="text-sm text-green-700 mt-1">{checkText}</p>
               </div>
             </div>
           </div>

@@ -5,27 +5,38 @@ import { useState } from 'react'
 import { ARABIC_LETTERS } from '@/data/letters'
 import TracingCanvas from '@/components/TracingCanvas'
 import { useArabicAudio } from '@/hooks/useArabicAudio'
+import { getRandomFeedback } from '@/lib/feedback'
 
 export default function LetterPracticePage({ params }: { params: { id: string } }) {
   const letter = ARABIC_LETTERS.find((l) => l.id === params.id)
   const [currentPosition, setCurrentPosition] = useState<'initial' | 'medial' | 'terminal'>('initial')
   const [checkMessage, setCheckMessage] = useState(false)
   const [checkPercentage, setCheckPercentage] = useState(0)
+  const [checkTitle, setCheckTitle] = useState('')
+  const [checkText, setCheckText] = useState('')
   const [selectedWord, setSelectedWord] = useState<{ word: string; meaning: string } | null>(null)
   const [wordCheckMessage, setWordCheckMessage] = useState(false)
   const [wordCheckPercentage, setWordCheckPercentage] = useState(0)
+  const [wordCheckTitle, setWordCheckTitle] = useState('')
+  const [wordCheckText, setWordCheckText] = useState('')
   const { speak } = useArabicAudio()
 
   const handleCheck = (pct: number) => {
     setCheckPercentage(pct)
+    const feedback = getRandomFeedback(pct)
+    setCheckTitle(feedback.title)
+    setCheckText(feedback.message)
     setCheckMessage(true)
-    setTimeout(() => setCheckMessage(false), 3000)
+    setTimeout(() => setCheckMessage(false), 3500)
   }
 
   const handleWordCheck = (pct: number) => {
     setWordCheckPercentage(pct)
+    const feedback = getRandomFeedback(pct)
+    setWordCheckTitle(feedback.title)
+    setWordCheckText(feedback.message)
     setWordCheckMessage(true)
-    setTimeout(() => setWordCheckMessage(false), 3000)
+    setTimeout(() => setWordCheckMessage(false), 3500)
   }
 
   if (!letter || !letter.forms) {
@@ -175,14 +186,12 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
 
                 {/* Success Message */}
                 {checkMessage && (
-                  <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in">
-                    <div className="flex items-center gap-2">
-                      <div className="text-green-600">✓</div>
+                  <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg animate-in fade-in">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">✨</div>
                       <div>
-                        <p className="font-semibold text-green-900">Great job!</p>
-                        <p className="text-sm text-green-700">
-                          {checkPercentage >= 80 ? "Perfect match! You nailed it." : checkPercentage >= 60 ? "Good effort! Keep practicing." : "Keep practicing and you'll get there!"}
-                        </p>
+                        <p className="font-bold text-green-900 text-lg">{checkTitle}</p>
+                        <p className="text-sm text-green-700 mt-1">{checkText}</p>
                       </div>
                     </div>
                   </div>
@@ -244,14 +253,12 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
 
                 {/* Success Message */}
                 {wordCheckMessage && (
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in">
-                    <div className="flex items-center gap-2">
-                      <div className="text-green-600">✓</div>
+                  <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg animate-in fade-in">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">✨</div>
                       <div>
-                        <p className="font-semibold text-green-900">Great job!</p>
-                        <p className="text-sm text-green-700">
-                          {wordCheckPercentage >= 80 ? "Perfect match! You nailed it." : wordCheckPercentage >= 60 ? "Good effort! Keep practicing." : "Keep practicing and you'll get there!"}
-                        </p>
+                        <p className="font-bold text-green-900 text-lg">{wordCheckTitle}</p>
+                        <p className="text-sm text-green-700 mt-1">{wordCheckText}</p>
                       </div>
                     </div>
                   </div>
