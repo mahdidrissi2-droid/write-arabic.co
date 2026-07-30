@@ -103,44 +103,51 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Example Words</h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Practice Words</h3>
                     <div className="space-y-4">
-                      {pos.key === 'initial' && (
-                        <>
-                          <div className="bg-blue-50 rounded-lg p-4">
-                            <p className="text-xs text-gray-500 font-semibold mb-2">Example</p>
-                            <p className="arabic text-3xl text-gray-900 text-right">{letter.exampleWord}</p>
-                            <p className="text-sm text-gray-600 mt-2">{letter.exampleMeaning}</p>
-                          </div>
-                          <div className="text-sm text-gray-600">
-                            <p className="font-semibold mb-2">Tips:</p>
-                            <ul className="list-disc list-inside space-y-1">
-                              <li>Start at the top right</li>
-                              <li>Follow the natural flow of the letter</li>
-                              <li>Connect smoothly to the next letter</li>
-                            </ul>
-                          </div>
-                        </>
+                      {pos.key === 'initial' && letter.initialWords && (
+                        <div className="space-y-3">
+                          {letter.initialWords.map((word, idx) => (
+                            <div key={idx} className="bg-blue-50 rounded-lg p-3">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="text-xs text-gray-500 font-semibold mb-1">Word {idx + 1}</p>
+                                  <p className="arabic text-2xl text-gray-900 text-right">{word.word}</p>
+                                  <p className="text-sm text-gray-600 mt-1">{word.meaning}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       )}
-                      {pos.key !== 'initial' && (
-                        <div className="text-sm text-gray-600">
-                          <p className="font-semibold mb-3">Practice Tips:</p>
-                          <ul className="list-disc list-inside space-y-1">
-                            {pos.key === 'medial' && (
-                              <>
-                                <li>Connect from the left side</li>
-                                <li>Maintain the middle shape</li>
-                                <li>Connect to the right side smoothly</li>
-                              </>
-                            )}
-                            {pos.key === 'terminal' && (
-                              <>
-                                <li>Connect from the left side</li>
-                                <li>Complete the final shape</li>
-                                <li>End with a flourish if needed</li>
-                              </>
-                            )}
-                          </ul>
+                      {pos.key === 'medial' && letter.medialWords && (
+                        <div className="space-y-3">
+                          {letter.medialWords.map((word, idx) => (
+                            <div key={idx} className="bg-green-50 rounded-lg p-3">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="text-xs text-gray-500 font-semibold mb-1">Word {idx + 1}</p>
+                                  <p className="arabic text-2xl text-gray-900 text-right">{word.word}</p>
+                                  <p className="text-sm text-gray-600 mt-1">{word.meaning}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {pos.key === 'terminal' && letter.terminalWords && (
+                        <div className="space-y-3">
+                          {letter.terminalWords.map((word, idx) => (
+                            <div key={idx} className="bg-amber-50 rounded-lg p-3">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="text-xs text-gray-500 font-semibold mb-1">Word {idx + 1}</p>
+                                  <p className="arabic text-2xl text-gray-900 text-right">{word.word}</p>
+                                  <p className="text-sm text-gray-600 mt-1">{word.meaning}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
