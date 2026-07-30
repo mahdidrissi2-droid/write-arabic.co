@@ -9,7 +9,15 @@ import { useArabicAudio } from '@/hooks/useArabicAudio'
 export default function LetterPracticePage({ params }: { params: { id: string } }) {
   const letter = ARABIC_LETTERS.find((l) => l.id === params.id)
   const [currentPosition, setCurrentPosition] = useState<'initial' | 'medial' | 'terminal'>('initial')
+  const [checkMessage, setCheckMessage] = useState(false)
+  const [checkPercentage, setCheckPercentage] = useState(0)
   const { speak } = useArabicAudio()
+
+  const handleCheck = (pct: number) => {
+    setCheckPercentage(pct)
+    setCheckMessage(true)
+    setTimeout(() => setCheckMessage(false), 3000)
+  }
 
   if (!letter || !letter.forms) {
     return (
@@ -145,9 +153,24 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Your Practice Area</h3>
                 <p className="text-gray-600 mb-6">Trace or write the letter below. Try to match the example above.</p>
                 <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl overflow-hidden border-2 border-blue-200">
-                  <TracingCanvas arabic={pos.form || letter.letter} />
+                  <TracingCanvas arabic={pos.form || letter.letter} onCheck={handleCheck} />
                 </div>
                 <p className="text-xs text-gray-500 mt-4 text-center">Use your mouse or touch to write on the canvas</p>
+
+                {/* Success Message */}
+                {checkMessage && (
+                  <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in">
+                    <div className="flex items-center gap-2">
+                      <div className="text-green-600">✓</div>
+                      <div>
+                        <p className="font-semibold text-green-900">Great job!</p>
+                        <p className="text-sm text-green-700">
+                          {checkPercentage >= 80 ? "Perfect match! You nailed it." : checkPercentage >= 60 ? "Good effort! Keep practicing." : "Keep practicing and you'll get there!"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Example Variations */}
