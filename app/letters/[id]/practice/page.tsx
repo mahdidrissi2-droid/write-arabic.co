@@ -11,12 +11,21 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
   const [currentPosition, setCurrentPosition] = useState<'initial' | 'medial' | 'terminal'>('initial')
   const [checkMessage, setCheckMessage] = useState(false)
   const [checkPercentage, setCheckPercentage] = useState(0)
+  const [selectedWord, setSelectedWord] = useState<{ word: string; meaning: string } | null>(null)
+  const [wordCheckMessage, setWordCheckMessage] = useState(false)
+  const [wordCheckPercentage, setWordCheckPercentage] = useState(0)
   const { speak } = useArabicAudio()
 
   const handleCheck = (pct: number) => {
     setCheckPercentage(pct)
     setCheckMessage(true)
     setTimeout(() => setCheckMessage(false), 3000)
+  }
+
+  const handleWordCheck = (pct: number) => {
+    setWordCheckPercentage(pct)
+    setWordCheckMessage(true)
+    setTimeout(() => setWordCheckMessage(false), 3000)
   }
 
   if (!letter || !letter.forms) {
@@ -108,7 +117,7 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                       {pos.key === 'initial' && letter.initialWords && (
                         <div className="space-y-3">
                           {letter.initialWords.map((word, idx) => (
-                            <div key={idx} className="bg-blue-50 rounded-lg p-3">
+                            <button key={idx} onClick={() => setSelectedWord(word)} className="w-full bg-blue-50 hover:bg-blue-100 rounded-lg p-3 text-left transition-colors cursor-pointer border border-blue-200 hover:border-blue-300">
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-xs text-gray-500 font-semibold mb-1">Word {idx + 1}</p>
@@ -116,14 +125,14 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                                   <p className="text-sm text-gray-600 mt-1">{word.meaning}</p>
                                 </div>
                               </div>
-                            </div>
+                            </button>
                           ))}
                         </div>
                       )}
                       {pos.key === 'medial' && letter.medialWords && (
                         <div className="space-y-3">
                           {letter.medialWords.map((word, idx) => (
-                            <div key={idx} className="bg-green-50 rounded-lg p-3">
+                            <button key={idx} onClick={() => setSelectedWord(word)} className="w-full bg-green-50 hover:bg-green-100 rounded-lg p-3 text-left transition-colors cursor-pointer border border-green-200 hover:border-green-300">
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-xs text-gray-500 font-semibold mb-1">Word {idx + 1}</p>
@@ -131,14 +140,14 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                                   <p className="text-sm text-gray-600 mt-1">{word.meaning}</p>
                                 </div>
                               </div>
-                            </div>
+                            </button>
                           ))}
                         </div>
                       )}
                       {pos.key === 'terminal' && letter.terminalWords && (
                         <div className="space-y-3">
                           {letter.terminalWords.map((word, idx) => (
-                            <div key={idx} className="bg-amber-50 rounded-lg p-3">
+                            <button key={idx} onClick={() => setSelectedWord(word)} className="w-full bg-amber-50 hover:bg-amber-100 rounded-lg p-3 text-left transition-colors cursor-pointer border border-amber-200 hover:border-amber-300">
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-xs text-gray-500 font-semibold mb-1">Word {idx + 1}</p>
@@ -146,7 +155,7 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
                                   <p className="text-sm text-gray-600 mt-1">{word.meaning}</p>
                                 </div>
                               </div>
-                            </div>
+                            </button>
                           ))}
                         </div>
                       )}
@@ -210,6 +219,51 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
             All Letters →
           </Link>
         </div>
+
+        {/* Word Practice Modal */}
+        {selectedWord && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Practice Writing Word</p>
+                  <p className="arabic text-3xl font-bold text-gray-900">{selectedWord.word}</p>
+                </div>
+                <button onClick={() => setSelectedWord(null)} className="text-2xl text-gray-500 hover:text-gray-700">×</button>
+              </div>
+
+              <div className="p-6 space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Meaning: {selectedWord.meaning}</h3>
+                  <p className="text-gray-600">Trace or write the word below to practice</p>
+                </div>
+
+                <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl overflow-hidden border-2 border-blue-200">
+                  <TracingCanvas arabic={selectedWord.word} onCheck={handleWordCheck} />
+                </div>
+
+                {/* Success Message */}
+                {wordCheckMessage && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in">
+                    <div className="flex items-center gap-2">
+                      <div className="text-green-600">✓</div>
+                      <div>
+                        <p className="font-semibold text-green-900">Great job!</p>
+                        <p className="text-sm text-green-700">
+                          {wordCheckPercentage >= 80 ? "Perfect match! You nailed it." : wordCheckPercentage >= 60 ? "Good effort! Keep practicing." : "Keep practicing and you'll get there!"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <button onClick={() => setSelectedWord(null)} className="w-full px-6 py-3 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition-colors font-semibold">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )
