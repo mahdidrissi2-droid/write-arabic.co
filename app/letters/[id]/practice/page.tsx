@@ -27,7 +27,7 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
     setCheckTitle(feedback.title)
     setCheckText(feedback.message)
     setCheckMessage(true)
-    setTimeout(() => setCheckMessage(false), 3500)
+    setTimeout(() => setCheckMessage(false), 5000)
   }
 
   const handleWordCheck = (pct: number) => {
@@ -36,7 +36,7 @@ export default function LetterPracticePage({ params }: { params: { id: string } 
     setWordCheckTitle(feedback.title)
     setWordCheckText(feedback.message)
     setWordCheckMessage(true)
-    setTimeout(() => setWordCheckMessage(false), 3500)
+    setTimeout(() => setWordCheckMessage(false), 5000)
   }
 
   if (!letter || !letter.forms) {

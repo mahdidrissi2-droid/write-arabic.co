@@ -31,8 +31,7 @@ export default function TodayWord() {
     setCheckTitle(feedback.title)
     setCheckText(feedback.message)
     setCheckMessage(true)
-    // Hide message after 3.5 seconds
-    setTimeout(() => setCheckMessage(false), 3500)
+    setTimeout(() => setCheckMessage(false), 5000)
   }
 
   return (
